@@ -1,62 +1,72 @@
-const services = [
-  {
-    title: "Mediation",
-    items: [
-      "Intake interviews (1 hour maximum) - $100 per person",
-      "Half-day mediation - $350 per person plus GST",
-      "Full day mediation - $800 per person plus GST",
-      "Room hire - Please contact us for room hire arrangements for in person mediation sessions. Prices will vary depending on the duration and number of rooms required.",
-    ],
-  },
-  {
-    title: "Private Tutoring",
-    items: [
-      "We are professionally trained and registered teachers who have blue and yellow cards.",
-      "Online tutoring - $65 per hour",
-      "In-person tutoring - $85 per hour, inclusive of some travel. Travel charges may occur for travel over 1 hour to and from location.",
-    ],
-  },
-  {
-    title: "Advocacy Services",
-    items: [
-      "We charge a flat fee of $100 per hour for advocacy services. This is regardless of location. You can package a tutoring and advocacy program for your student that includes helping them improve their learning outcomes and advocating to their learning institution to secure the adjustments they need.",
-    ],
-  },
-];
+import type { Metadata } from "next";
+import Link from "next/link";
+import type { CSSProperties } from "react";
+import { OverallFeedback } from "@/components/review/FeedbackForm";
+import { concepts } from "@/lib/concepts";
+import { site } from "@/lib/site";
 
-export default function Home() {
+export const metadata: Metadata = { title: "Website concepts" };
+
+export default function ConceptsHub() {
   return (
-    <main className="flex flex-1 flex-col justify-center bg-indigo-700 px-6 py-20 sm:py-28">
-      <div className="mx-auto w-full max-w-6xl">
-        <header className="mx-auto max-w-3xl text-center">
-          <h1 className="font-serif text-4xl font-bold text-white sm:text-5xl">
-            What do our services cost?
-          </h1>
-          <p className="mt-8 text-lg leading-8 text-white sm:text-xl">
-            Our services are competitively priced and designed to deliver value
-            for money. We can tailor education and advocacy packages to your
-            personal needs.
-          </p>
-        </header>
+    <main className="mx-auto w-full max-w-5xl px-5 py-12 sm:py-16">
+      <p className="text-base font-bold tracking-wide text-accent uppercase">
+        {site.name} · Draft
+      </p>
+      <h1 className="mt-2 font-heading text-4xl leading-tight font-semibold text-brand sm:text-5xl">
+        Three ideas for the new website
+      </h1>
+      <p className="mt-5 max-w-3xl text-xl">
+        Each concept below is a different way of laying out the same
+        information. Open each one, try it on your phone as well, and use the
+        bar at the bottom of the screen to switch colours and leave notes.
+      </p>
+      <ul className="mt-4 max-w-3xl list-disc space-y-1 pl-6 text-muted">
+        <li>Layouts and colours can be mixed: any layout works in any colour.</li>
+        <li>
+          The wording is a draft, and the photo and &ldquo;about me&rdquo; text
+          are placeholders until yours arrive.
+        </li>
+      </ul>
 
-        <div className="mt-14 grid gap-6 md:grid-cols-3">
-          {services.map((service) => (
-            <section
-              key={service.title}
-              className="rounded-lg bg-white px-8 py-10 text-center shadow-sm"
+      <ol className="mt-10 grid gap-5 md:grid-cols-3">
+        {concepts.map((c) => (
+          <li key={c.id}>
+            <Link
+              href={`/concept/${c.id}`}
+              data-theme={c.palette}
+              style={{ "--heading": c.headingFont } as CSSProperties}
+              className="group flex h-full flex-col overflow-hidden rounded-2xl border border-line bg-surface text-ink hover:shadow-lg"
             >
-              <h2 className="font-serif text-2xl font-bold text-indigo-950 sm:text-3xl">
-                {service.title}
-              </h2>
-              <div className="mt-6 space-y-4 text-lg leading-8 text-slate-600">
-                {service.items.map((item) => (
-                  <p key={item}>{item}</p>
-                ))}
+              <div className="bg-brand px-6 py-8 text-white">
+                <p className="text-base text-white/85">Concept {c.id}</p>
+                <h2 className="font-heading text-3xl leading-tight font-semibold">
+                  {c.name}
+                </h2>
               </div>
-            </section>
-          ))}
+              <div className="flex flex-1 flex-col p-6">
+                <p>{c.summary}</p>
+                <p className="mt-auto pt-5 font-bold text-accent group-hover:underline">
+                  Open concept {c.id} →
+                </p>
+              </div>
+            </Link>
+          </li>
+        ))}
+      </ol>
+
+      <section id="feedback" className="mt-16 rounded-2xl bg-band p-6 sm:p-10">
+        <h2 className="font-heading text-3xl leading-tight font-semibold text-brand">
+          Your feedback
+        </h2>
+        <p className="mt-3 max-w-3xl">
+          Notes you leave on each concept are collected here. When you&rsquo;re
+          done, email them or copy them into a message.
+        </p>
+        <div className="mt-8">
+          <OverallFeedback />
         </div>
-      </div>
+      </section>
     </main>
   );
 }
